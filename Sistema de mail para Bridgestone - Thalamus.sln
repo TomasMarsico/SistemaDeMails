@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sistema de mail para Bridgestone - Thalamus", "Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus.csproj", "{CED0859A-46BC-4005-A1A2-77EC0A0EA50A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CED0859A-46BC-4005-A1A2-77EC0A0EA50A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CED0859A-46BC-4005-A1A2-77EC0A0EA50A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CED0859A-46BC-4005-A1A2-77EC0A0EA50A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CED0859A-46BC-4005-A1A2-77EC0A0EA50A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {839B9329-D024-4C36-A031-A23EB2EE88C4}
+	EndGlobalSection
+EndGlobal
