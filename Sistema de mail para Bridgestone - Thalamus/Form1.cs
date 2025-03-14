@@ -119,35 +119,36 @@ namespace Sistema_de_mail_para_Bridgestone___Thalamus
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnErrorStockDate_Click(object sender, EventArgs e)
         {
+
             {
-                if (checkFiscal2.Checked == false)
+                if (checkBox10.Checked == false)
                 {
                     Clipboard.SetText(
 
                     "Estimados, buenos días/tardes. \r\n\r\n" +
                     "Sobre sus archivos les comento lo siguiente:\r\n\r\n" +
-                    "Archivo de clientes:\r\n\r\n" +
-                    "Detectamos que en ciertas celdas de la columna “fiscalId” se ingresan caracteres inválidos (guiones, puntos, espacios, etc), los cuales imposibilitan el procesamiento de la fila.\r\n" +
-                    "Recordar que el formato de la columna “fiscalId” es completamente numérica, cualquier carácter no numérico dará error.\r\n\r\n" +
-                    "Favor de corregir y reenviar para poder reanudar con el procesamiento de los archivos\r\n\r\n" +
+                    "Archivo de stock:\r\n\r\n" +
+                    "Detectamos que en la columna “Stock Date” se ingresan fechas erróneas o en formato incorrecto.\r\n" +
+                    "Recordar que el formato que manejamos es \"fecha corta\", por tanto cualquier otro formato genera error en el sistema.\r\n" +
+                    "Favor de corregir y reenviar.\r\n\r\n" +
                     "Quedo al pendiente.\r\n" +
-                    "Saludos.\r\n"
+                    "Saludos."
 
 
                     );
                 }
-                else if (checkFiscal2.Checked == true)
+                else if (checkBox10.Checked == true)
                 {
                     Clipboard.SetText(
                     "Estimados, buenos días/tardes. \r\n\r\n" +
                     "Sobre sus archivos les comento lo siguiente:\r\n\r\n" +
-                    "Archivo de clientes:\r\n\r\n" +
-                    "Detectamos que en ciertas celdas de la columna “fiscalId” se ingresan caracteres inválidos (guiones, puntos, espacios, etc), los cuales imposibilitan el procesamiento de la fila.\r\n" +
-                    "Recordar que el formato de la columna “fiscalId” es completamente numérica, cualquier carácter no numérico dará error.\r\n\r\n" +
-                    "Favor de corregir en las filas:\r\n\r\n" +
-                    txtFiscalId.Text +
+                    "Archivo de stock:\r\n\r\n" +
+                    "Detectamos que en la columna “Stock Date” se ingresan fechas erróneas o en formato incorrecto.\r\n" +
+                    "Recordar que el formato que manejamos es \"fecha corta\", por tanto cualquier otro formato genera error en el sistema.\r\n\r\n" +
+                    "Favor de corregir en las filas:\r\n" +
+                    textBox7.Text +
                     "\r\n\r\n" +
                     "Quedo al pendiente.\r\n" +
                     "Saludos."
@@ -444,6 +445,113 @@ namespace Sistema_de_mail_para_Bridgestone___Thalamus
             Clipboard.SetDataObject(dataObject);
 
             MessageBox.Show("Mensaje con tabla copiado al portapapeles", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (checkFiscal2.Checked == false)
+            {
+                Clipboard.SetText(
+
+                "Estimados, buenos días/tardes. \r\n\r\n" +
+                "Sobre sus archivos les comento lo siguiente:\r\n\r\n" +
+                "Archivo de clientes:\r\n\r\n" +
+                "Detectamos que en ciertas celdas de la columna “fiscalId” se ingresan caracteres inválidos (guiones, puntos, espacios, etc), los cuales imposibilitan el procesamiento de la fila.\r\n" +
+                "Recordar que el formato de la columna “fiscalId” es completamente numérica, cualquier carácter no numérico dará error.\r\n\r\n" +
+                "Favor de corregir y reenviar para poder reanudar con el procesamiento de los archivos\r\n\r\n" +
+                "Quedo al pendiente.\r\n" +
+                "Saludos.\r\n"
+
+
+                );
+            }
+            else if (checkFiscal2.Checked == true)
+            {
+                Clipboard.SetText(
+                "Estimados, buenos días/tardes. \r\n\r\n" +
+                "Sobre sus archivos les comento lo siguiente:\r\n\r\n" +
+                "Archivo de clientes:\r\n\r\n" +
+                "Detectamos que en ciertas celdas de la columna “fiscalId” se ingresan caracteres inválidos (guiones, puntos, espacios, etc), los cuales imposibilitan el procesamiento de la fila.\r\n" +
+                "Recordar que el formato de la columna “fiscalId” es completamente numérica, cualquier carácter no numérico dará error.\r\n\r\n" +
+                "Favor de corregir en las filas:\r\n\r\n" +
+                txtFiscalId.Text +
+                "\r\n\r\n" +
+                "Quedo al pendiente.\r\n" +
+                "Saludos."
+                );
+            }
+            MessageBox.Show("Texto copiado al portapapeles", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnErrorCodSucursal_Click(object sender, EventArgs e)
+        {
+            if (checkBox5.Checked == false)
+            {
+                Clipboard.SetText(
+
+                "Estimados, buenos días/tardes. \r\n\r\n" +
+                "Sobre sus archivos les comento lo siguiente:\r\n\r\n" +
+                "Archivo de stock:\r\n\r\n" +
+                "Detectamos que se ingresan códigos de sucursal que no fueron declarados anteriormente en el archivo de sucursales correspondiente.\r\n" +
+                "Favor de corregir y reenviar.\r\n\r\n" +
+                "Quedo al pendiente.\r\n" +
+                "Saludos."
+
+
+                );
+            }
+            else if (checkBox5.Checked == true)
+            {
+                Clipboard.SetText(
+                "Estimados, buenos días/tardes. \r\n\r\n" +
+                "Sobre sus archivos les comento lo siguiente:\r\n\r\n" +
+                "Archivo de stock:\r\n\r\n" +
+                "Detectamos que se ingresan códigos de sucursal que no fueron declarados anteriormente en el archivo de sucursales correspondiente.\r\n\r\n" +
+                "Codigos declarados:\r\n\r\n" +
+                textBox4.Text + "\r\n\r\n" +
+                "Códigos ingresados en este archivo:\r\n\r\n" +
+                textBox3.Text + "\r\n\r\n" +
+                "Quedo al pendiente.\r\n" +
+                "Saludos.\r\n"
+                );
+            }
+            MessageBox.Show("Texto copiado al portapapeles", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+            {
+                panel7.Enabled = true;  // Activa el Panel (puedes interactuar con él)
+            }
+            else
+            {
+                panel7.Enabled = false; // Desactiva el Panel (se verá gris)
+            }
+        }
+
+        private void checkBox11_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox11.Checked)
+            {
+                panel14.Enabled = true;  // Activa el Panel (puedes interactuar con él)
+            }
+            else
+            {
+                panel14.Enabled = false; // Desactiva el Panel (se verá gris)
+            }
+        }
+
+        private void checkBox10_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if (checkBox10.Checked)
+            {
+                panel15.Enabled = true;  // Activa el Panel (puedes interactuar con él)
+            }
+            else
+            {
+                panel15.Enabled = false; // Desactiva el Panel (se verá gris)
+            }
         }
     }
 }

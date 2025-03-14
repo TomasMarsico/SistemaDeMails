@@ -34,7 +34,6 @@
             panel8 = new Panel();
             label12 = new Label();
             textBox3 = new TextBox();
-            label10 = new Label();
             textBox4 = new TextBox();
             btnErrorCodSucursal = new Button();
             checkBox6 = new CheckBox();
@@ -142,10 +141,8 @@
             panel8.Anchor = AnchorStyles.Right;
             panel8.Controls.Add(label12);
             panel8.Controls.Add(textBox3);
-            panel8.Controls.Add(label10);
             panel8.Controls.Add(textBox4);
             panel8.Controls.Add(btnErrorCodSucursal);
-            panel8.Enabled = false;
             panel8.Location = new Point(826, 208);
             panel8.Margin = new Padding(3, 2, 3, 2);
             panel8.Name = "panel8";
@@ -156,7 +153,7 @@
             // 
             label12.AutoSize = true;
             label12.ForeColor = SystemColors.ButtonHighlight;
-            label12.Location = new Point(33, 96);
+            label12.Location = new Point(33, 114);
             label12.Name = "label12";
             label12.Size = new Size(257, 15);
             label12.TabIndex = 38;
@@ -164,7 +161,6 @@
             // 
             // textBox3
             // 
-            textBox3.Enabled = false;
             textBox3.Location = new Point(10, 135);
             textBox3.Multiline = true;
             textBox3.Name = "textBox3";
@@ -172,19 +168,8 @@
             textBox3.Size = new Size(304, 65);
             textBox3.TabIndex = 37;
             // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.ForeColor = SystemColors.ButtonHighlight;
-            label10.Location = new Point(57, 111);
-            label10.Name = "label10";
-            label10.Size = new Size(207, 15);
-            label10.TabIndex = 36;
-            label10.Text = "(dejar vacio en caso de no especificar)";
-            // 
             // textBox4
             // 
-            textBox4.Enabled = false;
             textBox4.Location = new Point(10, 4);
             textBox4.Multiline = true;
             textBox4.Name = "textBox4";
@@ -194,7 +179,6 @@
             // 
             // btnErrorCodSucursal
             // 
-            btnErrorCodSucursal.Enabled = false;
             btnErrorCodSucursal.ForeColor = SystemColors.ActiveCaptionText;
             btnErrorCodSucursal.Location = new Point(60, 220);
             btnErrorCodSucursal.Name = "btnErrorCodSucursal";
@@ -202,6 +186,7 @@
             btnErrorCodSucursal.TabIndex = 35;
             btnErrorCodSucursal.Text = "Copiar contestacion a portapeles";
             btnErrorCodSucursal.UseVisualStyleBackColor = true;
+            btnErrorCodSucursal.Click += btnErrorCodSucursal_Click;
             // 
             // checkBox6
             // 
@@ -236,7 +221,6 @@
             panel14.Controls.Add(label16);
             panel14.Controls.Add(btnErrorStockDate);
             panel14.Controls.Add(checkBox10);
-            panel14.Enabled = false;
             panel14.Location = new Point(421, 164);
             panel14.Margin = new Padding(3, 2, 3, 2);
             panel14.Name = "panel14";
@@ -281,6 +265,7 @@
             btnErrorStockDate.TabIndex = 9;
             btnErrorStockDate.Text = "Copiar contestacion a portapeles";
             btnErrorStockDate.UseVisualStyleBackColor = true;
+            btnErrorStockDate.Click += btnErrorStockDate_Click;
             // 
             // checkBox10
             // 
@@ -293,6 +278,7 @@
             checkBox10.TabIndex = 14;
             checkBox10.Text = "Ingresar en que filas hay errores ";
             checkBox10.UseVisualStyleBackColor = true;
+            checkBox10.CheckedChanged += checkBox10_CheckedChanged_1;
             // 
             // checkBox11
             // 
@@ -307,6 +293,7 @@
             checkBox11.TabIndex = 40;
             checkBox11.Text = "Error en stock date";
             checkBox11.UseVisualStyleBackColor = true;
+            checkBox11.CheckedChanged += checkBox11_CheckedChanged;
             // 
             // panel7
             // 
@@ -314,6 +301,7 @@
             panel7.Controls.Add(label9);
             panel7.Controls.Add(txtPartnerSKU);
             panel7.Controls.Add(btnFaltaSkuStock);
+            panel7.Enabled = false;
             panel7.Location = new Point(27, 164);
             panel7.Margin = new Padding(3, 2, 3, 2);
             panel7.Name = "panel7";
@@ -363,6 +351,7 @@
             checkBox1.TabIndex = 38;
             checkBox1.Text = "Error por falta de SKU's";
             checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.CheckedChanged += checkBox1_CheckedChanged_1;
             // 
             // label8
             // 
@@ -896,7 +885,6 @@
         private CheckBox checkBox6;
         private Label label12;
         private TextBox textBox3;
-        private Label label10;
         private Panel panel9;
     }
 }

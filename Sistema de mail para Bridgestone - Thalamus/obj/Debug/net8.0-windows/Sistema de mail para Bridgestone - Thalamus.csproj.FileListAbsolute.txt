@@ -32,3 +32,4 @@ C:\Users\tomas.marsico\Desktop\Sistema de mail para Bridgestone - Thalamus\Siste
 C:\Users\tomas.marsico\Desktop\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\obj\Debug\net8.0-windows\Sistema de mail para Bridgestone - Thalamus.pdb
 C:\Users\tomas.marsico\Desktop\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\obj\Debug\net8.0-windows\Sistema de mail para Bridgestone - Thalamus.genruntimeconfig.cache
 C:\Users\tomas.marsico\Desktop\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\obj\Debug\net8.0-windows\ref\Sistema de mail para Bridgestone - Thalamus.dll
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\obj\Debug\net8.0-windows\Sistema de mail para Bridgestone - Thalamus.sourcelink.json
