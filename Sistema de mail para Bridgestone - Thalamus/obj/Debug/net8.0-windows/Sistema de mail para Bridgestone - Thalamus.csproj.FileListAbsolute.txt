@@ -33,3 +33,20 @@ C:\Users\tomas.marsico\Desktop\Sistema de mail para Bridgestone - Thalamus\Siste
 C:\Users\tomas.marsico\Desktop\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\obj\Debug\net8.0-windows\Sistema de mail para Bridgestone - Thalamus.genruntimeconfig.cache
 C:\Users\tomas.marsico\Desktop\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\obj\Debug\net8.0-windows\ref\Sistema de mail para Bridgestone - Thalamus.dll
 C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\obj\Debug\net8.0-windows\Sistema de mail para Bridgestone - Thalamus.sourcelink.json
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\bin\Debug\net8.0-windows\EPPlus.dll
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\bin\Debug\net8.0-windows\EPPlus.Interfaces.dll
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\bin\Debug\net8.0-windows\EPPlus.System.Drawing.dll
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\bin\Debug\net8.0-windows\Microsoft.Extensions.Configuration.dll
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\bin\Debug\net8.0-windows\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\bin\Debug\net8.0-windows\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\bin\Debug\net8.0-windows\Microsoft.Extensions.Configuration.Json.dll
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\bin\Debug\net8.0-windows\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\bin\Debug\net8.0-windows\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\bin\Debug\net8.0-windows\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\bin\Debug\net8.0-windows\Microsoft.Extensions.Primitives.dll
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\bin\Debug\net8.0-windows\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\bin\Debug\net8.0-windows\System.Drawing.Common.dll
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\bin\Debug\net8.0-windows\System.Security.Cryptography.Pkcs.dll
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\obj\Debug\net8.0-windows\Sistema de mail para Bridgestone - Thalamus.csproj.AssemblyReference.cache
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\obj\Debug\net8.0-windows\Sistema .F9AE1E61.Up2Date

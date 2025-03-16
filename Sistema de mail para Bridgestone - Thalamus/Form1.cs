@@ -2,6 +2,12 @@ using System.Text;
 using System;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using OfficeOpenXml;
 
 namespace Sistema_de_mail_para_Bridgestone___Thalamus
 {
@@ -553,6 +559,78 @@ namespace Sistema_de_mail_para_Bridgestone___Thalamus
                 panel15.Enabled = false; // Desactiva el Panel (se verá gris)
             }
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Archivos Excel|*.xlsx;*.xls",
+                Title = "Seleccionar archivo Excel"
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                ProcesarExcel(openFileDialog.FileName);
+            }
+        }
+
+        private void ProcesarExcel(string filePath)
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var package = new ExcelPackage(new FileInfo(filePath)))
+            {
+                var worksheet = package.Workbook.Worksheets[0]; // Suponemos que es la primera hoja
+                int rowCount = worksheet.Dimension.Rows;
+                List<string> facturasPromo = new List<string>();
+                List<string> facturasAfiliados = new List<string>();
+
+                for (int row = 2; row <= rowCount; row++) // Asumiendo que la primera fila son encabezados
+                {
+                    string tipoPromo = worksheet.Cells[row, 9].Text.Trim(); // Columna H
+                    string tipoAfiliado = worksheet.Cells[row, 7].Text.Trim(); // Columna J
+                    string factura = worksheet.Cells[row, 10].Text.Trim(); // Número de factura en la misma columna J
+
+                    if (tipoPromo.IndexOf("promo", StringComparison.OrdinalIgnoreCase) >= 0 && tipoPromo.IndexOf("no promo", StringComparison.OrdinalIgnoreCase) < 0)
+                    {
+                        facturasPromo.Add(factura);
+                    }
+
+                    if (tipoAfiliado.IndexOf("afiliad", StringComparison.OrdinalIgnoreCase) >= 0 && !tipoAfiliado.Equals("No afiliado", StringComparison.OrdinalIgnoreCase))
+                    {
+                        facturasAfiliados.Add(factura);
+                    }
+                }
+
+                // Tomar el 5% aleatorio de cada lista
+                Random random = new Random();
+                var seleccionPromo = facturasPromo.OrderBy(x => random.Next()).Take((int)Math.Ceiling(facturasPromo.Count * 0.05)).ToList();
+                var seleccionAfiliados = facturasAfiliados.OrderBy(x => random.Next()).Take((int)Math.Ceiling(facturasAfiliados.Count * 0.05)).ToList();
+
+                // Construir el mensaje
+                StringBuilder mensaje = new StringBuilder();
+                mensaje.AppendLine("Estimada, buenos días.");
+                mensaje.AppendLine();
+                mensaje.AppendLine("Me comunico, a pedido de Bridgestone y con el fin de realizar la auditoría de promociones, para solicitarle que suba al FTP, dentro de la carpeta Facturas/promociones/febrero, las siguientes facturas:\r\n");
+                mensaje.AppendLine(string.Join("\r\n", seleccionPromo));
+                mensaje.AppendLine();
+                mensaje.AppendLine("----");
+                mensaje.AppendLine();
+                mensaje.AppendLine("También a pedido de Bridgestone y con el fin de realizar la auditoría de AFILIADOS, para solicitarle que suba al FTP, dentro de la carpeta Facturas/afiliados/febrero, las siguientes facturas:\r\n");
+                mensaje.AppendLine(string.Join("\r\n", seleccionAfiliados));
+                mensaje.AppendLine();
+                mensaje.AppendLine("---");
+                mensaje.AppendLine();
+                mensaje.AppendLine("Quedo al pendiente.");
+                mensaje.AppendLine("Saludos.");
+
+                // Copiar al portapapeles
+                Clipboard.SetText(mensaje.ToString());
+                MessageBox.Show("Mensaje copiado al portapapeles", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
     }
 }
+    
+
 

@@ -86,6 +86,8 @@
             label1 = new Label();
             pictureBox4 = new PictureBox();
             tabControl1 = new TabControl();
+            tabPage1 = new TabPage();
+            button5 = new Button();
             tabPage2.SuspendLayout();
             panel8.SuspendLayout();
             panel14.SuspendLayout();
@@ -102,6 +104,7 @@
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             tabControl1.SuspendLayout();
+            tabPage1.SuspendLayout();
             SuspendLayout();
             // 
             // tabPage2
@@ -413,7 +416,7 @@
             // 
             panel9.Anchor = AnchorStyles.Top;
             panel9.Controls.Add(button4);
-            panel9.Location = new Point(421, 492);
+            panel9.Location = new Point(421, 488);
             panel9.Name = "panel9";
             panel9.Size = new Size(366, 100);
             panel9.TabIndex = 35;
@@ -433,15 +436,14 @@
             // label5
             // 
             label5.Anchor = AnchorStyles.Top;
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.ForeColor = SystemColors.ButtonHighlight;
-            label5.Location = new Point(512, 67);
+            label5.Font = new Font("Segoe UI", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label5.ForeColor = Color.White;
+            label5.Location = new Point(518, 62);
             label5.Name = "label5";
-            label5.Size = new Size(133, 45);
+            label5.Size = new Size(155, 45);
             label5.TabIndex = 33;
             label5.Text = "Clientes";
-            label5.TextAlign = ContentAlignment.TopCenter;
+            label5.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panel4
             // 
@@ -754,15 +756,14 @@
             // label1
             // 
             label1.Anchor = AnchorStyles.Top;
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.ForeColor = SystemColors.ButtonHighlight;
-            label1.Location = new Point(431, 13);
+            label1.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.White;
+            label1.Location = new Point(434, 17);
             label1.Name = "label1";
-            label1.Size = new Size(309, 45);
+            label1.Size = new Size(325, 45);
             label1.TabIndex = 4;
-            label1.Text = "Generacion de mails";
-            label1.TextAlign = ContentAlignment.TopCenter;
+            label1.Text = "Generacion de mails:";
+            label1.TextAlign = ContentAlignment.MiddleCenter;
             label1.Click += label1_Click_1;
             // 
             // pictureBox4
@@ -779,11 +780,33 @@
             tabControl1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tabControl1.Controls.Add(tabGeneracionMail);
             tabControl1.Controls.Add(tabPage2);
+            tabControl1.Controls.Add(tabPage1);
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(1171, 567);
             tabControl1.TabIndex = 3;
+            // 
+            // tabPage1
+            // 
+            tabPage1.Controls.Add(button5);
+            tabPage1.Location = new Point(4, 24);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new Size(1163, 539);
+            tabPage1.TabIndex = 2;
+            tabPage1.Text = "tabPage1";
+            tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            button5.Location = new Point(383, 197);
+            button5.Name = "button5";
+            button5.Size = new Size(75, 23);
+            button5.TabIndex = 0;
+            button5.Text = "button5";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
             // 
             // Form1
             // 
@@ -824,6 +847,7 @@
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             tabControl1.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -886,5 +910,7 @@
         private Label label12;
         private TextBox textBox3;
         private Panel panel9;
+        private TabPage tabPage1;
+        private Button button5;
     }
 }
