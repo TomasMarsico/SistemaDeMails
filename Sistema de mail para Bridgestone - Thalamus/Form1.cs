@@ -326,6 +326,7 @@ namespace Sistema_de_mail_para_Bridgestone___Thalamus
 
             mensaje.AppendLine("Estimados, buenos días/tardes.\r\n");
             mensaje.AppendLine("Sobre sus archivos les comento lo siguiente:\r\n");
+            mensaje.AppendLine("Archivo de clientes:\r\n");
 
             int contadorErrores = 0; // Contador para numerar los errores
 
@@ -570,11 +571,11 @@ namespace Sistema_de_mail_para_Bridgestone___Thalamus
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                ProcesarExcel(openFileDialog.FileName);
+                ProcesarFacturas(openFileDialog.FileName);
             }
         }
 
-        private void ProcesarExcel(string filePath)
+        private void ProcesarFacturas(string filePath)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
@@ -629,8 +630,259 @@ namespace Sistema_de_mail_para_Bridgestone___Thalamus
                 MessageBox.Show("Mensaje copiado al portapapeles", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        //    private void button6_Click(object sender, EventArgs e)
+        //    {
+        //        OpenFileDialog openFileDialog = new OpenFileDialog
+        //        {
+        //            Filter = "Archivos Excel|*.xlsx;*.xls",
+        //            Title = "Seleccionar archivo Excel"
+        //        };
+
+        //        if (openFileDialog.ShowDialog() == DialogResult.OK)
+        //        {
+        //            ProcesarVentas(openFileDialog.FileName);
+        //        }
+        //    }
+
+        //    private void ProcesarVentas(string filePath)
+        //    {
+
+        //        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+        //        using (var package = new ExcelPackage(new FileInfo(filePath)))
+        //        {
+        //            var worksheet = package.Workbook.Worksheets[0]; // Suponemos que es la primera hoja
+        //            int rowCount = worksheet.Dimension.Rows;
+        //            Dictionary<string, List<int>> errores = new Dictionary<string, List<int>>();
+
+        //            for (int row = 2; row <= rowCount; row++) // Asumiendo que la primera fila son encabezados
+        //            {
+        //                string mensajeErrorColumna = worksheet.Cells[row, 11].Text.Trim(); // Columna K (Mensaje de error)
+        //                string systemID = worksheet.Cells[row, 1].Text.Trim(); // Columna A (System ID)
+        //                string skuCode = worksheet.Cells[row, 2].Text.Trim(); // Columna B (skuCode)
+
+        //                string mensajeError = ObtenerMensajeError(mensajeErrorColumna, row, systemID, skuCode);
+        //                if (!string.IsNullOrEmpty(mensajeError))
+        //                {
+        //                    if (!errores.ContainsKey(mensajeError))
+        //                    {
+        //                        errores[mensajeError] = new List<int>();
+        //                    }
+        //                    errores[mensajeError].Add(row);
+        //                }
+        //            }
+
+        //            // Construir el mensaje
+        //            StringBuilder mensaje = new StringBuilder();
+        //            mensaje.AppendLine("Estimada, buenos días.");
+        //            mensaje.AppendLine();
+
+        //            if (errores.Count > 0)
+        //            {
+        //                mensaje.AppendLine("Se detectaron los siguientes errores en el archivo:");
+        //                foreach (var error in errores)
+        //                {
+        //                    mensaje.AppendLine($"{error.Key} Ocurrió en las filas: {string.Join(", ", error.Value)}");
+        //                }
+        //                mensaje.AppendLine();
+        //            }
+
+        //            mensaje.AppendLine("Quedo al pendiente.");
+        //            mensaje.AppendLine("Saludos.");
+
+        //            // Copiar al portapapeles
+        //            Clipboard.SetText(mensaje.ToString());
+        //            MessageBox.Show("Mensaje copiado al portapapeles", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //        }
+        //    }
+
+        //    // Método para obtener el mensaje de error basado en el contenido de la columna K
+        //    private string ObtenerMensajeError(string mensajeErrorColumna, int fila, string systemID, string skuCode)
+        //    {
+        //        if (mensajeErrorColumna.IndexOf("Invalid Code", StringComparison.OrdinalIgnoreCase) >= 0)
+        //            return "Se detectó un código inválido.";
+        //        if (mensajeErrorColumna.IndexOf("Invalid Principal", StringComparison.OrdinalIgnoreCase) >= 0)
+        //            return $"Detectamos que se ingresan clientes que no están registrados en el respectivo archivo de clientes: Código de cliente {systemID}";
+        //        if (mensajeErrorColumna.IndexOf("Incorrect Date", StringComparison.OrdinalIgnoreCase) >= 0)
+        //            return "La fecha ingresada es incorrecta.";
+        //        if (mensajeErrorColumna.IndexOf("Duplicate Entry", StringComparison.OrdinalIgnoreCase) >= 0)
+        //            return "Se encontró un registro duplicado.";
+        //        if (mensajeErrorColumna.IndexOf("Unauthorized Discount", StringComparison.OrdinalIgnoreCase) >= 0)
+        //            return "Descuento aplicado sin autorización.";
+
+        //        return ""; // Si no se encuentra un error relevante, no agrega nada
+        //    }
+
+
+        //}
+
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Archivos Excel|*.xlsx;*.xls",
+                Title = "Seleccionar archivo Excel"
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                ProcesarVentas(openFileDialog.FileName);
+            }
+        }
+
+        private void ProcesarVentas(string filePath)
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var package = new ExcelPackage(new FileInfo(filePath)))
+            {
+                var worksheet = package.Workbook.Worksheets[0]; // Suponemos que es la primera hoja
+                int rowCount = worksheet.Dimension.Rows;
+                Dictionary<string, HashSet<string>> errores = new Dictionary<string, HashSet<string>>(); // Cambiado a HashSet<string>
+
+                for (int row = 2; row <= rowCount; row++) // Asumiendo que la primera fila son encabezados
+                {
+                    string mensajeErrorColumna = worksheet.Cells[row, 11].Text.Trim(); // Columna K (Mensaje de error)
+                    string systemID = worksheet.Cells[row, 1].Text.Trim(); // Columna A (System ID)
+                    string skuCode = worksheet.Cells[row, 2].Text.Trim(); // Columna B (skuCode)
+
+                    string mensajeError = ObtenerMensajeError(mensajeErrorColumna, row, systemID, skuCode); // Pasamos skuCode
+                    if (!string.IsNullOrEmpty(mensajeError))
+                    {
+                        if (!errores.ContainsKey(mensajeError))
+                        {
+                            errores[mensajeError] = new HashSet<string>(); // Inicializamos como HashSet
+                        }
+                        errores[mensajeError].Add(skuCode); // Agregar al HashSet (evita duplicados)
+                    }
+                }
+
+                // Construir el mensaje (se delega a un método para mayor claridad)
+                ConstruirYCopiarMensaje(errores);
+            }
+        }
+
+        private string ObtenerMensajeError(string mensajeErrorColumna, int fila, string systemID, string skuCode)
+        {
+            if (mensajeErrorColumna.IndexOf("Invalid Code", StringComparison.OrdinalIgnoreCase) >= 0)
+                return "Se detectó un código inválido."; // Mensaje clave para "Invalid Code"
+            if (mensajeErrorColumna.IndexOf("Invalid Principal", StringComparison.OrdinalIgnoreCase) >= 0)
+                return $"Detectamos que se ingresan clientes que no están registrados en el respectivo archivo de clientes: Código de cliente {systemID}";
+            if (mensajeErrorColumna.IndexOf("Incorrect Date", StringComparison.OrdinalIgnoreCase) >= 0)
+                return "La fecha ingresada es incorrecta.";
+            if (mensajeErrorColumna.IndexOf("Duplicate Entry", StringComparison.OrdinalIgnoreCase) >= 0)
+                return "Se encontró un registro duplicado.";
+            if (mensajeErrorColumna.IndexOf("Unauthorized Discount", StringComparison.OrdinalIgnoreCase) >= 0)
+                return "Descuento aplicado sin autorización.";
+
+            return ""; // Si no se encuentra un error relevante, no agrega nada
+        }
+
+
+        private void ConstruirYCopiarMensaje(Dictionary<string, HashSet<string>> errores)
+        {
+            StringBuilder mensaje = new StringBuilder();
+            mensaje.AppendLine("Estimada, buenos días.");
+            mensaje.AppendLine();
+
+            if (errores.Count > 0)
+            {
+                mensaje.AppendLine("Se detectaron los siguientes errores en el archivo:");
+
+                foreach (var error in errores)
+                {
+                    if (error.Key == "Se detectó un código inválido.") // Manejo especial para "Invalid Code"
+                    {
+                        ConstruirYCopiarMensajeInvalidCode(error.Value); // Llama a la función que genera la tabla
+                        return; // Importante: Salimos después de procesar este caso
+                    }
+                    else
+                    {
+                        mensaje.AppendLine($"{error.Key}");  // Solo el mensaje, sin las filas
+                    }
+                }
+                mensaje.AppendLine();
+            }
+
+            mensaje.AppendLine("Quedo al pendiente.");
+            mensaje.AppendLine("Saludos.");
+
+            // Copiar al portapapeles (solo si no es el caso "Invalid Code")
+            Clipboard.SetText(mensaje.ToString());
+            MessageBox.Show("Mensaje copiado al portapapeles", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ConstruirYCopiarMensajeInvalidCode(HashSet<string> skuCodes) // Ahora recibe un HashSet
+        {
+            string mensajeTexto = "Estimados, buenos días/tardes.\r\n\r\n" +
+                                "Sobre sus archivos les comento lo siguiente:\r\n\r\n" +
+                                "Archivo de stock:\r\n\r\n" +
+                                "Detectamos que se ingresan códigos no coincidentes con los del archivo de equivalencias.\r\n" +
+                                "Favor de completar el siguiente cuadro:\r\n\r\n";
+
+            // Definir la estructura de la tabla
+            string[,] datos = new string[skuCodes.Count + 1, 3]; // Usamos Count del HashSet
+            datos[0, 0] = "Partner SKU Code";
+            datos[0, 1] = "COD-BRID";
+            datos[0, 2] = "Name";
+
+            int i = 1; // Inicializamos el contador para las filas de datos
+            foreach (string sku in skuCodes) // Iteramos sobre el HashSet
+            {
+                datos[i, 0] = sku;
+                datos[i, 1] = "";
+                datos[i, 2] = "";
+                i++;
+            }
+            //El resto del codigo va igual
+            // Construir la tabla en formato de texto con tabulaciones
+            StringBuilder plainText = new StringBuilder();
+            StringBuilder html = new StringBuilder();
+
+            // Encabezado del formato HTML compatible con Outlook y Gmail
+            html.AppendLine("Version:0.9");
+            html.AppendLine("StartHTML:00000097");
+            html.AppendLine("EndHTML:00000197");
+            html.AppendLine("StartFragment:00000133");
+            html.AppendLine("EndFragment:00000163");
+            html.AppendLine("<html><body>");
+            html.AppendLine($"<p>{mensajeTexto.Replace("\r\n", "<br>")}</p>");
+            html.AppendLine("<table border='1' style='border-collapse:collapse;'>");
+            html.AppendLine("");
+
+            for (int j = 0; j < datos.GetLength(0); j++)
+            {
+                html.AppendLine("<tr>");
+                for (int k = 0; k < datos.GetLength(1); k++)
+                {
+                    html.AppendLine($"<td style='padding:5px;'>{datos[j, k]}</td>");
+                    plainText.Append(datos[j, k] + "\t");
+                }
+                plainText.AppendLine();
+                html.AppendLine("</tr>");
+            }
+
+            html.AppendLine("");
+            html.AppendLine("</table><br>");
+            html.AppendLine("<p>Quedo al pendiente.<br>Saludos.</p>");
+            html.AppendLine("</body></html>");
+
+            // Crear un objeto DataObject y agregar el mensaje en formato plano y HTML
+            DataObject dataObject = new DataObject();
+            dataObject.SetData(DataFormats.Text, mensajeTexto + plainText.ToString());
+            dataObject.SetData(DataFormats.Html, html.ToString());
+
+            // Copiar al portapapeles
+            Clipboard.SetDataObject(dataObject);
+
+            MessageBox.Show("Mensaje con tabla copiado al portapapeles", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
     }
 }
+
     
 
 

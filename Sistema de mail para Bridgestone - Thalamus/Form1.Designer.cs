@@ -88,6 +88,7 @@
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
             button5 = new Button();
+            button6 = new Button();
             tabPage2.SuspendLayout();
             panel8.SuspendLayout();
             panel14.SuspendLayout();
@@ -360,11 +361,11 @@
             // 
             label8.Anchor = AnchorStyles.Top;
             label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label8.Font = new Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label8.ForeColor = SystemColors.ButtonHighlight;
-            label8.Location = new Point(530, 67);
+            label8.Location = new Point(535, 62);
             label8.Name = "label8";
-            label8.Size = new Size(97, 45);
+            label8.Size = new Size(102, 45);
             label8.TabIndex = 37;
             label8.Text = "Stock";
             label8.TextAlign = ContentAlignment.TopCenter;
@@ -373,13 +374,13 @@
             // 
             label7.Anchor = AnchorStyles.Top;
             label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label7.Font = new Font("Segoe UI Semibold", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label7.ForeColor = SystemColors.ButtonHighlight;
-            label7.Location = new Point(431, 13);
+            label7.Location = new Point(435, 17);
             label7.Name = "label7";
-            label7.Size = new Size(309, 45);
+            label7.Size = new Size(322, 45);
             label7.TabIndex = 36;
-            label7.Text = "Generacion de mails";
+            label7.Text = "Generacion de mails:";
             label7.TextAlign = ContentAlignment.TopCenter;
             // 
             // pictureBox1
@@ -789,6 +790,7 @@
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(button6);
             tabPage1.Controls.Add(button5);
             tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
@@ -807,6 +809,16 @@
             button5.Text = "button5";
             button5.UseVisualStyleBackColor = true;
             button5.Click += button5_Click;
+            // 
+            // button6
+            // 
+            button6.Location = new Point(525, 197);
+            button6.Name = "button6";
+            button6.Size = new Size(75, 23);
+            button6.TabIndex = 1;
+            button6.Text = "button6";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
             // 
             // Form1
             // 
@@ -912,5 +924,6 @@
         private Panel panel9;
         private TabPage tabPage1;
         private Button button5;
+        private Button button6;
     }
 }
