@@ -50,3 +50,5 @@ C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\
 C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
 C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\obj\Debug\net8.0-windows\Sistema de mail para Bridgestone - Thalamus.csproj.AssemblyReference.cache
 C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\obj\Debug\net8.0-windows\Sistema .F9AE1E61.Up2Date
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\obj\Debug\net8.0-windows\Sistema_de_mail_para_Bridgestone___Thalamus.Form2.resources
+C:\Users\Administrator\source\repos\Sistema de mail para Bridgestone - Thalamus\Sistema de mail para Bridgestone - Thalamus\obj\Debug\net8.0-windows\Sistema_de_mail_para_Bridgestone___Thalamus.Form3.resources
