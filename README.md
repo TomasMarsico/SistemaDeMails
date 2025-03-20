@@ -3,11 +3,11 @@ Sistema de Validación y Auditoría de Archivos Excel
 Esta aplicación en C# con Windows Forms permite procesar y validar archivos Excel de ventas, stock y clientes, detectando errores y generando respuestas automáticas para corregirlos.
 
 Características principales
-✅ Validación de archivos Excel: Verifica si el archivo cargado corresponde a ventas, stock o clientes según su estructura.
-✅ Detección de errores: Identifica errores en los datos, como formatos incorrectos en fechas, códigos inválidos o valores no permitidos.
-✅ Generación de mensajes automáticos: Crea un texto estructurado con los errores detectados y lo copia automáticamente al portapapeles.
-✅ Selección de facturas aleatorias: Extrae un 5% de facturas de afiliados y promociones en los archivos de ventas.
-✅ Interfaz intuitiva: Permite cargar archivos de manera sencilla y visualizar el proceso en tiempo real.
+Validación de archivos Excel: Verifica si el archivo cargado corresponde a ventas, stock o clientes según su estructura.
+Detección de errores: Identifica errores en los datos, como formatos incorrectos en fechas, códigos inválidos o valores no permitidos.
+Generación de mensajes automáticos: Crea un texto estructurado con los errores detectados y lo copia automáticamente al portapapeles.
+Selección de facturas aleatorias: Extrae un 5% de facturas de afiliados y promociones en los archivos de ventas.
+Interfaz intuitiva: Permite cargar archivos de manera sencilla y visualizar el proceso en tiempo real.
 
 Tecnologías utilizadas
 🟢 C# – Desarrollo principal de la aplicación
