@@ -1,4 +1,5 @@
 Características principales
+
 ✅ Validación de archivos Excel: Verifica si el archivo cargado corresponde a ventas, stock o clientes según su estructura.
 
 ✅ Detección de errores: Identifica errores en los datos, como formatos incorrectos en fechas, códigos inválidos o valores no permitidos.
