@@ -9,33 +9,53 @@ using System.Linq;
 using System.Windows.Forms;
 using OfficeOpenXml;
 
+
 namespace Sistema_de_mail_para_Bridgestone___Thalamus
 {
 
     public partial class Form1 : Form
     {
         string tipoDeArch = "";
+        private bool isDragging = false;
+        private Point startPoint = new Point(0, 0);
+
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private async void Form1_Load(object sender, EventArgs e)
         {
+            panel3.Visible = true;
+
+            // Simular una operación que toma tiempo
+            await Task.Delay(750); // Simula una carga de 3 segundos
+
+            // Ocultar la barra de carga
+            panel3.Visible = false;
+
         }
 
-        private void selecFcsBtn_Click(object sender, EventArgs e)
+        private async void selecFcsBtn_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
                 Filter = "Archivos Excel|*.xlsx;*.xls",
                 Title = "Seleccionar archivo Excel"
             };
+            panel3.Visible = true;
+
+            // Simular una operación que toma tiempo
+            await Task.Delay(650); // Simula una carga de 3 segundos
+
+            // Ocultar la barra de carga
+            panel3.Visible = false;
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 ProcesarFacturas(openFileDialog.FileName);
             }
+
         }
 
         private void ProcesarFacturas(string filePath)
@@ -94,7 +114,7 @@ namespace Sistema_de_mail_para_Bridgestone___Thalamus
             }
         }
 
-        private void selecArchBtn_Click(object sender, EventArgs e)
+        private async void selecArchBtn_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
@@ -102,6 +122,13 @@ namespace Sistema_de_mail_para_Bridgestone___Thalamus
                 Title = "Seleccionar archivos Excel",
                 Multiselect = true // Permitir selección múltiple
             };
+            panel3.Visible = true;
+
+            // Simular una operación que toma tiempo
+            await Task.Delay(650); // Simula una carga de 3 segundos
+
+            // Ocultar la barra de carga
+            panel3.Visible = false;
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -150,11 +177,18 @@ namespace Sistema_de_mail_para_Bridgestone___Thalamus
             using (var package = new ExcelPackage(new FileInfo(filePath)))
             {
                 var worksheet = package.Workbook.Worksheets[0];
-                int colCount = worksheet.Dimension.Columns;
-                string statusHeader = worksheet.Cells[1, colCount].Text.Trim().ToLower();
+                int colCount = worksheet.Dimension?.Columns ?? 0; // Usar el operador null-conditional para evitar excepciones
+                int rowCount = worksheet.Dimension?.Rows ?? 0;
+
+                if (colCount == 0 || rowCount == 0)
+                {
+                    MessageBox.Show($"El archivo {Path.GetFileName(filePath)} está vacío o no tiene datos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return (mensajeTexto.ToString(), mensajeHtml.ToString());
+                }
+
                 int lastColWithData = 0;
 
-                // Identificar la última columna con datos
+                // Identificar la última columna con datos en la primera fila (encabezados)
                 for (int col = 1; col <= colCount; col++)
                 {
                     if (!string.IsNullOrWhiteSpace(worksheet.Cells[1, col].Text))
@@ -163,13 +197,21 @@ namespace Sistema_de_mail_para_Bridgestone___Thalamus
                     }
                 }
 
-                statusHeader = worksheet.Cells[1, lastColWithData].Text.Trim().ToLower();
+                // Mostrar el valor de lastColWithData en un Label (para depuración)
+                label2.Text = $"Última columna con datos: {lastColWithData}";
+
+                if (lastColWithData == 0)
+                {
+                    MessageBox.Show($"No se encontraron columnas con datos en el archivo {Path.GetFileName(filePath)}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return (mensajeTexto.ToString(), mensajeHtml.ToString());
+                }
+
+                string statusHeader = worksheet.Cells[1, lastColWithData].Text.Trim().ToLower();
 
                 if (statusHeader != "status")
                 {
-                    MessageBox.Show($"El archivo {Path.GetFileName(filePath)} no es compatible o no tiene la columna 'status'.");
+                    MessageBox.Show($"El archivo {Path.GetFileName(filePath)} no tiene la columna 'status' en la última columna con datos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return (mensajeTexto.ToString(), mensajeHtml.ToString());
-
                 }
 
                 switch (lastColWithData)
@@ -190,6 +232,15 @@ namespace Sistema_de_mail_para_Bridgestone___Thalamus
                             var (textoVentas, htmlVentas) = ProcesarVentas(filePath);
                             mensajeTexto.AppendLine(textoVentas);
                             mensajeHtml.AppendLine(htmlVentas);
+                        }
+                        break;
+                    case 14:
+                        if (worksheet.Cells[1, 14].Text.Trim().Equals("status", StringComparison.OrdinalIgnoreCase))
+                        {
+                            tipoDeArch = "Archivo de clientes";
+                            var (textoClientes, htmlClientes) = ProcesarClientes(filePath);
+                            mensajeTexto.AppendLine(textoClientes);
+                            mensajeHtml.AppendLine(htmlClientes);
                         }
                         break;
                     default:
@@ -454,6 +505,111 @@ namespace Sistema_de_mail_para_Bridgestone___Thalamus
             return (mensajeTexto.ToString(), mensajeHtml.ToString());
         }
 
+        private (string mensajeTexto, string mensajeHtml) ProcesarClientes(string filePath)
+        {
+            StringBuilder mensajeTexto = new StringBuilder();
+            StringBuilder mensajeHtml = new StringBuilder();
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var package = new ExcelPackage(new FileInfo(filePath)))
+            {
+                var worksheet = package.Workbook.Worksheets[0];
+                int rowCount = worksheet.Dimension.Rows;
+                Dictionary<string, List<string>> otrosErrores = new Dictionary<string, List<string>>();
+
+                for (int row = 2; row <= rowCount; row++) // Asumimos que la primera fila son encabezados
+                {
+                    string mensajeErrorColumna = worksheet.Cells[row, 14].Text.Trim(); // Columna "status" (N)
+                    string mensajeError = ObtenerMensajeErrorClientes(mensajeErrorColumna, row);
+
+                    if (!string.IsNullOrEmpty(mensajeError))
+                    {
+                        string mensajeBase = mensajeError.Split(':')[0].Trim();
+                        if (!otrosErrores.ContainsKey(mensajeBase))
+                        {
+                            otrosErrores[mensajeBase] = new List<string>();
+                        }
+
+                        if (mensajeError.StartsWith("Detectamos que en la columna \"fiscalId\""))
+                        {
+                            // No se agregan filas específicas para este error
+                        }
+                        else if (mensajeError.StartsWith("Detectamos que se ingresan emails erróneos"))
+                        {
+                            otrosErrores[mensajeBase].Add(row.ToString());
+                        }
+                        else if (mensajeError.StartsWith("Detectamos que se ingresan códigos de país erróneos"))
+                        {
+                            // No se agregan filas específicas para este error
+                        }
+                    }
+                }
+
+                // Construir mensaje de clientes
+                mensajeTexto.AppendLine($"Archivo de clientes:");
+                mensajeHtml.AppendLine($"<p><span style='text-decoration: underline;'>Archivo de clientes:</span></p>");
+
+                if (otrosErrores.Count > 0)
+                {
+                    mensajeTexto.AppendLine("Se detectaron los siguientes errores en el archivo:");
+                    mensajeHtml.AppendLine("<p>Se detectaron los siguientes errores en el archivo:</p>");
+
+                    // Otros errores
+                    bool primerError = true;
+                    foreach (var error in otrosErrores)
+                    {
+                        if (primerError)
+                        {
+                            mensajeTexto.AppendLine($"{error.Key}");
+                            mensajeHtml.AppendLine($"<p>{error.Key.Replace(":", ".")}</p>");
+                            primerError = false;
+                        }
+                        else
+                        {
+                            mensajeTexto.AppendLine("---");
+                            mensajeHtml.AppendLine("<hr>");
+                            mensajeTexto.AppendLine($"También {error.Key.ToLower().Replace("detectamos que", "detectamos que")}");
+                            mensajeHtml.AppendLine($"<p>También {error.Key.Replace(":", ".").ToLower().Replace("detectamos que", "detectamos que")}</p>");
+                        }
+
+                        if (error.Key.StartsWith("Detectamos que se ingresan emails erróneos"))
+                        {
+                            mensajeTexto.AppendLine("   Favor de corregir en las filas:");
+                            mensajeTexto.AppendLine($"    {string.Join(", ", error.Value.Distinct())}");
+                            mensajeHtml.AppendLine($"    <p>{string.Join(", ", error.Value.Distinct())}</p>");
+                        }
+                        else
+                        {
+                            mensajeTexto.AppendLine("   Favor de corregir y reenviar.");
+                            mensajeHtml.AppendLine("   <p>Favor de corregir y reenviar.</p>");
+                        }
+                    }
+                }
+                else
+                {
+                    mensajeTexto.AppendLine("No se detectaron errores en el archivo.");
+                    mensajeHtml.AppendLine("<p>No se detectaron errores en el archivo.</p>");
+                }
+            }
+
+            return (mensajeTexto.ToString(), mensajeHtml.ToString());
+        }
+
+        private string ObtenerMensajeErrorClientes(string mensajeErrorColumna, int fila)
+        {
+            if (mensajeErrorColumna.IndexOf("fiscalid", StringComparison.OrdinalIgnoreCase) >= 0)
+                return "Detectamos que en la columna \"fiscalId\" se ingresan números de cuit o cuils los cuales pueden llegar a contener caracteres no válidos tales como guiones, puntos, espacios, etc. Favor de corregir y reenviar.";
+
+            if (mensajeErrorColumna.IndexOf("invalidEmail", StringComparison.OrdinalIgnoreCase) >= 0)
+                return $"Detectamos que se ingresan emails erróneos, o con un formato que no es el de una dirección de correo electrónico. Favor de corregir en las filas: {fila}";
+
+            if (mensajeErrorColumna.IndexOf("countryID", StringComparison.OrdinalIgnoreCase) >= 0)
+                return "Detectamos que se ingresan códigos de país erróneos en la columna \"address.countryID\". Favor de corregir y reenviar.";
+
+            return "";
+        }
+
         private string ConstruirTablaSku(HashSet<string> skuCodes)
         {
             string mensajeTexto = "Detectamos que se ingresan códigos no coincidentes con los del archivo de equivalencias.\r\n" +
@@ -500,38 +656,42 @@ namespace Sistema_de_mail_para_Bridgestone___Thalamus
         private string ObtenerMensajeErrorStock(string mensajeErrorColumna, int fila, string skuCode, string quantity)
         {
             if (mensajeErrorColumna.IndexOf("Invalid Code", StringComparison.OrdinalIgnoreCase) >= 0)
-                return "Detectamos que se ingresan códigos no coincidentes con los del archivo de equivalencias.\r\n" +
-                       "Favor de completar el siguiente cuadro:";
+                return "Detectamos que se ingresan códigos no coincidentes con los del archivo de equivalencias. Favor de completar el siguiente cuadro:";
 
             if (mensajeErrorColumna.IndexOf("Date", StringComparison.OrdinalIgnoreCase) >= 0)
                 return "Detectamos que se ingresan fechas inválidas. Recordar que el formato correcto es fecha corta en DMA (Día/Mes/Año).";
 
             if (mensajeErrorColumna.IndexOf("For input string", StringComparison.OrdinalIgnoreCase) >= 0 ||
                 mensajeErrorColumna.IndexOf("Float", StringComparison.OrdinalIgnoreCase) >= 0)
-                return "Detectamos que se ingresan comas y/o otro caracter incompatible en la columna \"Quantity\". Favor de corregir y reenviar.";
+                return "Detectamos que se ingresan comas y/o otro carácter incompatible en la columna \"Quantity\".";
 
             return "";
         }
+
         private string ObtenerMensajeError(string mensajeErrorColumna, int fila, string systemID, string skuCode, string saleDateCell, string Amount, string Descrip1, string Descrip2)
         {
             if (mensajeErrorColumna.IndexOf("Invalid Code", StringComparison.OrdinalIgnoreCase) >= 0)
                 return "Se detectó un código inválido.";
+
             if (mensajeErrorColumna.IndexOf("Invalid Principal", StringComparison.OrdinalIgnoreCase) >= 0)
                 return $"Detectamos que se ingresan clientes que no están registrados en el respectivo archivo de clientes: Código de cliente {systemID}";
-            if (mensajeErrorColumna.IndexOf("Sale Date", StringComparison.OrdinalIgnoreCase) >= 0)
+
+            if (mensajeErrorColumna.IndexOf("Date", StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 if (!DateTime.TryParseExact(saleDateCell, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out _))
                 {
-                    return "Detectamos que se ingresan ventas con el formato de fecha invalido. Recordar que el formato correcto es fecha corta en DMA (Dia/mes/año).";
+                    return "Detectamos que se ingresan ventas con el formato de fecha inválido. Recordar que el formato correcto es fecha corta en DMA (Día/Mes/Año).";
                 }
             }
+
             if (mensajeErrorColumna.IndexOf("For input string", StringComparison.OrdinalIgnoreCase) >= 0)
-                return "Detectamos que se ingresan comas y/o otro caracter incompatible en la columna Amount. Favor de corregir y reenviar.";
+                return "Detectamos que se ingresan comas y/o otro carácter incompatible en la columna Amount.";
+
             if (mensajeErrorColumna.IndexOf("Duplicate Entry", StringComparison.OrdinalIgnoreCase) >= 0)
                 return "Se encontró un registro duplicado.";
+
             if (mensajeErrorColumna.IndexOf("Unauthorized Discount", StringComparison.OrdinalIgnoreCase) >= 0)
                 return "Descuento aplicado sin autorización.";
-
 
             return "";
         }
@@ -552,9 +712,6 @@ namespace Sistema_de_mail_para_Bridgestone___Thalamus
                 this.WindowState = FormWindowState.Maximized; // Maximizar si no lo está
             }
         }
-
-        private bool isDragging = false;
-        private Point startPoint = new Point(0, 0);
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {

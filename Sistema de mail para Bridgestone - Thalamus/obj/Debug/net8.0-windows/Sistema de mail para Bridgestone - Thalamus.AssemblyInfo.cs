@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Sistema de mail para Bridgestone - Thalamus")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9ccdec8fbde0921d748daffa039676945895451e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9e19770551121fd027af7a82d0e23558f730a2fa")]
 [assembly: System.Reflection.AssemblyProductAttribute("Sistema de mail para Bridgestone - Thalamus")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Sistema de mail para Bridgestone - Thalamus")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
